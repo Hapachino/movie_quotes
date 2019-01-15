@@ -1,3 +1,9 @@
 nav {
   padding: 0 12px;
 }
+
+.sidenav {
+  li:last-child {
+    text-align: center;
+  }
+}

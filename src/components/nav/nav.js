@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import SideNav from './side_nav';
 import './nav.scss';
 
 class Nav extends Component {
@@ -40,30 +41,53 @@ class Nav extends Component {
     ],
   }
 
+  buildLink(link) {
+    return (
+      <li key={link.to}>
+        <Link to={link.to}>{link.text}</Link>
+      </li>
+    );
+  }
+
+  handleSignOut = () => {
+    console.log('Sign Out Button Clicked');
+  }
+
   renderLinks() {
     const { authLinks, commonLinks, noAuthLinks } = this.state;
-    const auth = true;
-    const links = commonLinks;
-    auth ? links.push(...authLinks) : links.push(...noAuthLinks);
+    const auth = false;
+    let links = [...commonLinks];
+    if (auth) {
+      links = [...links, ...authLinks].map(this.buildLink);
 
-    return links.map(link => {
-      return (
-        <li key={link.to}>
-          <Link to={link.to}>{link.text}</Link>
+      links.push(
+        <li key="sign-out">
+          <button onClick={this.handleSignOut} className="btn blue">Sign Out</button>
         </li>
-      );
-    });
+      )
+    } else {
+      links = [...links, ...noAuthLinks].map(this.buildLink);
+    }
+
+    return links;
   }
 
   render() {
-    return (
-      <nav className="blue darken-2">
-        <Link className="brand-logo" to="/">Movie Quote</Link>
+    const links = this.renderLinks();
 
-        <ul className="right">
-          {this.renderLinks()}
-        </ul>
-      </nav>
+    return (
+      <Fragment>
+        <nav className="blue darken-2">
+          <Link className="brand-logo" to="/">Movie Quotes</Link>
+          <a href="#" data-target="side-nav" className="sidenav-trigger">
+            <i className="material-icons">menu</i>
+          </a>
+          <ul className="right hide-on-med-and-down">
+            {links}
+          </ul>
+        </nav>
+        <SideNav links={links} />
+      </Fragment>
     );
   }
 }
