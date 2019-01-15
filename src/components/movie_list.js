@@ -4,7 +4,7 @@ class MovieList extends Component {
   isPrivate = this.props.match.params.type === 'private';
 
   render() {
-    console.log(this.isPrivate);
+    
     return (
       <div>
         <h1 className="center">
