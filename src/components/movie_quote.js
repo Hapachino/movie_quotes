@@ -12,4 +12,4 @@ class MovieQuote extends Component {
   }
 }
 
-export default auth(MovieQuote);
+export default MovieQuote;
