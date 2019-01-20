@@ -9,6 +9,7 @@ import MovieQuote from './movie_quote';
 import Nav from './nav';
 import SignIn from './sign_in';
 import SignUp from './sign_up';
+import auth from '../hoc/auth';
 
 const App = () => (
   <div>
@@ -17,10 +18,10 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route exact path="/movie-list" component={MovieList} />
-      <Route path="/movie-list/:type" component={MovieList} />
-      <Route path="/movie-quotes" component={MovieQuote} />
-      <Route path="/sign-in" component={SignIn} />
-      <Route path="/sign-up" component={SignUp} />
+      <Route path="/movie-list/:type" component={auth(MovieList)} />
+      <Route path="/movie-quotes" component={auth(MovieQuote)} />
+      <Route path="/sign-in" component={auth(SignIn, '/movie-quotes', true)} />
+      <Route path="/sign-up" component={auth(SignUp, '/movie-quotes', true)} />
     </div>
   </div>
 );
